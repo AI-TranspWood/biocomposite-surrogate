@@ -1,14 +1,14 @@
+import os
+
 import h5py
 import keras
 import numpy as np
-
 import tensorflow as tf
 import tensorflow_probability as tfp
 
-tfd = tfp.distributions
+from . import tfkan as tft
 
-import include.tfkan as tft
-import include.dataLoaders as dl
+
 def createArchitecture( inputSize, outputSize, layerSize = 1):
 
     tf.keras.backend.clear_session()
@@ -48,7 +48,8 @@ def createArchitecture( inputSize, outputSize, layerSize = 1):
 
 def setWeights( model ):
 
-    file = h5py.File( "./include/weights/weights.h5", 'r')
+    curr_dir = os.path.dirname( os.path.abspath( __file__ ) )
+    file = h5py.File( os.path.join( curr_dir, "weights/weights.h5"), 'r')
 
     keys = file.keys()
     nKeys = len( keys )
@@ -92,12 +93,12 @@ def computeEstimate( input, model, quantiles):
 
     stiffnessEstimate = model( input )
 
-    logE_T = tfd.Normal( loc = stiffnessEstimate[0].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
-    logE_L = tfd.Normal( loc = stiffnessEstimate[0].loc[ 0, 1], scale = stiffnessEstimate[0].scale[ 0, 1] )
-    logMu_LT = tfd.Normal( loc = stiffnessEstimate[2].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
+    logE_T = tfp.distributions.Normal( loc = stiffnessEstimate[0].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
+    logE_L = tfp.distributions.Normal( loc = stiffnessEstimate[0].loc[ 0, 1], scale = stiffnessEstimate[0].scale[ 0, 1] )
+    logMu_LT = tfp.distributions.Normal( loc = stiffnessEstimate[2].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
 
-    nu_T = tfd.Normal( loc = stiffnessEstimate[1].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
-    nu_LT = tfd.Normal( loc = stiffnessEstimate[1].loc[ 0, 1], scale = stiffnessEstimate[1].scale[ 0, 1] )
+    nu_T = tfp.distributions.Normal( loc = stiffnessEstimate[1].loc[ 0, 0], scale = stiffnessEstimate[0].scale[ 0, 0] )
+    nu_LT = tfp.distributions.Normal( loc = stiffnessEstimate[1].loc[ 0, 1], scale = stiffnessEstimate[1].scale[ 0, 1] )
 
     estimateResult = {}
     estimateResult["E_T"] = computeQuantiles( logE_T, quantiles = quantiles)
