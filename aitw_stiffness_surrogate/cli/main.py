@@ -14,8 +14,8 @@ def aitw_stiffness(
     ):
     """Command line interface for the AI surrogate model for stiffness prediction of wood."""
     # Import this inside to avoid running tensorflow loading for CLI help or sourcing
-    from .. import dataLoaders as dl
-    from .. import surrogate
+    from aitw_stiffness_surrogate import dataLoaders as dl
+    from aitw_stiffness_surrogate import surrogate
 
     quantiles = [ lower_bound_percentage, upper_bound_percentage]
 
