@@ -1,10 +1,11 @@
+from typing import Any, Callable, List, Tuple, Union
+
 import tensorflow as tf
 from keras.layers import Layer
-from .base import LayerKAN
-from ..ops.spline import fit_spline_coef
-from ..ops.grid import build_adaptive_grid
 
-from typing import Tuple, List, Any, Union, Callable
+from ..ops.grid import build_adaptive_grid
+from ..ops.spline import fit_spline_coef
+from .base import LayerKAN
 
 
 class DenseKAN(Layer, LayerKAN):

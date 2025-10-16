@@ -1,16 +1,38 @@
-## Create and initialize a clean virtual environment
-```
+# AITW stiffness surrogate model
+
+**NOTES** Requires python3.10 for the current pinned version of tensorflow.
+
+
+## Installaton
+
+### OPTIONAL Create and initialize a clean virtual environment
+
+```bash
 python3.10 -m venv "surrogate-virtual-env"
 source surrogate-virtual-env/bin/activate
 ```
-## Install dependencies
+
+### Install dependencies
+
+```bash
+cd <PATH to folder with pyproject.toml>
+pip install .[plotting]
 ```
-pip install -r requirements.txt
+
+## Usage
+
+### CLI
+
+The code makes avaialble a CLI utility to run the inference given an input JSON file.
+
+```bash
+aitw-stiffness example-input/input.json output.json 0.05 0.95
 ```
-## Run the surrogate model
-```
-python main.py <input-path> <output-path> <quantile-lower-bound> <quantile-upper-bound>
-```
+
+Addjust the parameters as needed (Use `--help` for more information).
+
+### Parameters
+
 Parameter | Description | Type
 --- | --- | ---
 `<input-path>` | File path to the input file containing a properly formatted JSON file. See fromat below. | String
@@ -18,34 +40,39 @@ Parameter | Description | Type
 `<quantile-lower-bound>` | Lower bound percentage of the uncertainty estimate. | Float [ 0, 1]
 `<quantile-upper-bound>` | Upper bound percentage of the uncertainty estimate | Float [ 0, 1]
 
-## Example run
-```
-python main.py ./example-input/input.json ./output.json 0.05 0.95
-```
-estimates the macroscopic stiffness parameters with 90% uncertainty interval for the example input file "./example-input/input.json":
-```json
-{
-    "fiberOrientationDistribution": "vonMises",
-    "fiberAspectRatio": 1000,
-    "orientationConcentration": 20,
-    "microfibrilAngle": 6,
-    "lumenPorosity": 0.07,
-    "fiberVolumeFraction": 0.1,
-    "celluloseContent": 0.73,
-    "hemicelluloseContent": 0.18,
-    "ligninContent": 0.03,
-    "pectinContent": 0.01,
-    "extractivesContent": 0.05,
-    "ashContent": 0.00,
-    "celluloseCrystallinity": 0.78,
-    "matrixYoungsModulus": 1.89,
-    "matrixPoissonRatio": 0.43,
-    "airPorosity": 0.05,
-    "tangentialInterfaceCompliance": 50,
-    "longitudinalInterfaceCompliance": 50
-}
-```
+## Input parameter values and ranges
+
+The surrogate has been trained with physical parameters ranging between the values below. Fiber orientation distribution parameter takes one of the two values below. \
+An error will be thrown if the input parameter values do not coincide with the limits.
+
+| Parameter   | Possible value |
+| ------------------------------- | ----- |
+| fiberOrientationDistribution    | "vonMises", "vonMisesFisher" |
+
+| Parameter   | Minimum     | Maximum        |
+| ------------------------------- | ----- | -------- |
+| fiberAspectRatio                |   1.2 |    20000 |
+| orientationConcentration        | 1e-10 |      100 |
+| microfibrilAngle                |     0 |       45 |
+| lumenPorosity                   |     0 |     0.99 |
+| fiberVolumeFraction             |     0 |        1 |
+| celluloseContent                |  0.05 |      0.9 |
+| hemicelluloseContent            |  0.01 |      0.5 |
+| ligninContent                   |  0.01 |      0.6 |
+| pectinContent                   |     0 |     0.15 |
+| extractivesContent              |     0 |     0.15 |
+| ashContent                      |     0 |      0.2 |
+| celluloseCrystallinity          |   0.2 |      1.0 |
+| matrixYoungsModulus             |     0 |      100 |
+| matrixPoissonRatio              |     0 |      0.5 |
+| airPorosity                     |     0 |      0.5 |
+| tangentialInterfaceCompliance   | 1e-10 | 100000.0 |
+| longitudinalInterfaceCompliance | 1e-10 | 100000.0 |
+
+## Output file example
+
 This results in the following output file format in "./output.json":
+
 ```json
 {
   "E_T": {
@@ -80,29 +107,3 @@ This results in the following output file format in "./output.json":
 }
 ```
 
-## Input parameter values and ranges
-The surrogate has been trained with physical parameters ranging between the values below. Fiber orientation distribution parameter takes one of the two values below.
-An error will be thrown if the input parameter values do not coincide with the limits.
-| Parameter   | Possible value |
-| ------------------------------- | ----- |
-| fiberOrientationDistribution    | "vonMises", "vonMisesFisher" |
-
-| Parameter   | Minimum     | Maximum        |
-| ------------------------------- | ----- | -------- |
-| fiberAspectRatio                |   1.2 |    20000 |
-| orientationConcentration        | 1e-10 |      100 |
-| microfibrilAngle                |     0 |       45 |
-| lumenPorosity                   |     0 |     0.99 |
-| fiberVolumeFraction             |     0 |        1 |
-| celluloseContent                |  0.05 |      0.9 |
-| hemicelluloseContent            |  0.01 |      0.5 |
-| ligninContent                   |  0.01 |      0.6 |
-| pectinContent                   |     0 |     0.15 |
-| extractivesContent              |     0 |     0.15 |
-| ashContent                      |     0 |      0.2 |
-| celluloseCrystallinity          |   0.2 |      1.0 |
-| matrixYoungsModulus             |     0 |      100 |
-| matrixPoissonRatio              |     0 |      0.5 |
-| airPorosity                     |     0 |      0.5 |
-| tangentialInterfaceCompliance   | 1e-10 | 100000.0 |
-| longitudinalInterfaceCompliance | 1e-10 | 100000.0 |

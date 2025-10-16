@@ -1,0 +1,31 @@
+{
+  "E_T": {
+    "median": 3.550992727279663,
+    "lowerBound": 0.0,
+    "upperBound": Infinity
+  },
+  "E_L": {
+    "median": 1.9295220375061035,
+    "lowerBound": 0.0,
+    "upperBound": Infinity
+  },
+  "nu_T": {
+    "median": 0.2790219783782959,
+    "lowerBound": -Infinity,
+    "upperBound": Infinity
+  },
+  "nu_LT": {
+    "median": 0.19985055923461914,
+    "lowerBound": -Infinity,
+    "upperBound": Infinity
+  },
+  "mu_LT": {
+    "median": 1.482556939125061,
+    "lowerBound": 0.0,
+    "upperBound": Infinity
+  },
+  "quantiles": [
+    0.0,
+    1.0
+  ]
+}

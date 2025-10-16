@@ -1,7 +1,7 @@
-from .dense import DenseKAN
-from .convolution import Conv1DKAN, Conv2DKAN, Conv3DKAN
-
 import tensorflow as tf
+
+from .convolution import Conv1DKAN, Conv2DKAN, Conv3DKAN
+from .dense import DenseKAN
 
 custom_objects = {
     'DenseKAN': DenseKAN,
