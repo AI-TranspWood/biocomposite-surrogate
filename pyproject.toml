@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 [project]
 # See https://www.python.org/dev/peps/pep-0621/
 name = "AITW_stiffness_surrogate"
-dynamic = ["version"] # read from ocr_translate/__init__.py
+dynamic = ["version"]
 description = "AITW: Surrogate model for predicting wood stiffness"
 authors = []
 readme = "README.md"
@@ -29,8 +29,8 @@ dependencies = [
     "tensorflow-probability==0.18.0",
 ]
 
-# [project.urls]
-# Source = ""
+[project.urls]
+Source = "https://github.com/ththarkonen/biocomposite-surrogate"
 
 [project.optional-dependencies]
 release = [

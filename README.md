@@ -16,7 +16,7 @@ source surrogate-virtual-env/bin/activate
 
 ```bash
 cd <PATH to folder with pyproject.toml>
-pip install .[plotting]
+pip install .
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ The code makes avaialble a CLI utility to run the inference given an input JSON 
 aitw-stiffness example-input/input.json output.json 0.05 0.95
 ```
 
-Addjust the parameters as needed (Use `--help` for more information).
+Adjust the parameters as needed (Use `--help` for more information).
 
 ### Parameters
 
