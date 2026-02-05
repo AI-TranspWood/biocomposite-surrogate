@@ -23,10 +23,10 @@ requires-python = "~=3.10"
 dependencies = [
     "click",
     "h5py",
-    "numpy==1.26.4",
-    "keras==2.10.0",
-    "tensorflow==2.10.0",
-    "tensorflow-probability==0.18.0",
+    "numpy",
+    "keras",
+    "tensorflow",
+    "tensorflow-probability",
 ]
 
 [project.urls]
